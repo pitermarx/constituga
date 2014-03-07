@@ -1,4 +1,4 @@
-var jsdom = require('jsdom'),
+var cheerio = require('cheerio'),
 	fs = require('fs'),
 	$;
 
@@ -32,28 +32,22 @@ var out = (function (parts) {
 
 fs.readFile('./const.htm', 'utf8', fileRead);
 function fileRead (err, data) {
-	jsdom.env({
-	  html: data,
-	  scripts: ['http://code.jquery.com/jquery-1.5.min.js'],
-	  done: function (err, window) {
-	  	  $ = window.jQuery;
-	      ActOnNode($('.ConteudoTexto'));
-	      out.text().forEach(function (e) {
-	      	fs.writeFile(e.title+'.md', e.text);
-	      });	      
-	  }
+	$ = cheerio.load(data);
+	ActOnNode($('.ConteudoTexto').children());
+	out.text().forEach(function (e) {
+	  fs.writeFile(e.title+'.md', e.text);
 	});	
 }
 
 function ActOnNode (node) {
-	var tagName = node.get(0).tagName,
+	var tagName = node[0].name,
 		text = node.text().trim();
 
 	if (text) {
-		if (tagName[0] === 'H') {
+		if (tagName[0] === 'h') {
 			out.title(+tagName[1], text);
 		}
-		else if (tagName === 'P') {
+		else if (tagName === 'p') {
 			out.line(text);
 		}
 		else if (text.indexOf("Princípios fundamentais") != -1){

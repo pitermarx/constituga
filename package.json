@@ -19,6 +19,6 @@
     "url": "git://github.com/pitermarx/constituga.git"
   },
   "dependencies": {
-    "jsdom": "*"
+    "cheerio": "*"
   }
 }
