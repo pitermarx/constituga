@@ -1,7 +1,11 @@
+    // cheerio dependency
 var cheerio = require('cheerio'),
-	fs = require('fs'),
-	$;
+    // fileSystem dependency
+    fs = require('fs'),
+    // pseudo jQuery from cheerio
+    $;
 
+// helper for caching parts
 var out = (function (parts) {
 	var current = -1,
 		threshold = 1;
@@ -30,6 +34,7 @@ var out = (function (parts) {
 	};
 }([]));
 
+// read from fs
 fs.readFile('./const.htm', 'utf8', fileRead);
 function fileRead (err, data) {
 	$ = cheerio.load(data);
@@ -39,6 +44,7 @@ function fileRead (err, data) {
 	});	
 }
 
+// recursive
 function ActOnNode (node) {
 	var tagName = node[0].name,
 		text = node.text().trim();
