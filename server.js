@@ -35,12 +35,12 @@ var out = (function (parts) {
 }([]));
 
 // read from fs
-fs.readFile('./const.htm', 'utf8', fileRead);
+fs.readFile('./source.html', 'utf8', fileRead);
 function fileRead (err, data) {
 	$ = cheerio.load(data);
 	ActOnNode($('.ConteudoTexto').children());
 	out.text().forEach(function (e) {
-	  fs.writeFile(e.title+'.md', e.text);
+	  fs.writeFile('Output/' + e.title+'.md', e.text);
 	});	
 }
 
@@ -48,13 +48,12 @@ function fileRead (err, data) {
 function ActOnNode (node) {
 	var tagName = node[0].name,
 		text = node.text().trim();
-
 	if (text) {
 		if (tagName[0] === 'h') {
 			out.title(+tagName[1], text);
 		}
 		else if (tagName === 'p') {
-			out.line(text);
+			out.line(text.trim());
 		}
 		else if (text.indexOf("Princípios fundamentais") != -1){
 			out.title(1, text);
