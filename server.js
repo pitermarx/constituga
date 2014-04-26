@@ -28,6 +28,9 @@ fs.mkdir(path, function(e){
         // save pseudo jQuery
         $ = cheerio.load(data);
         
+        // HACK! replace <br/> with a space
+        $('.ConteudoTexto br').replaceWith(' ');
+        
         // parse document
         parseNodes($('.ConteudoTexto').children());
         
