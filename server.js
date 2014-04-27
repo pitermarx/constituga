@@ -17,11 +17,15 @@ String.prototype.repeat = function(n) {
 // ensure output path
 fs.mkdir(path, function(e) {
     if(e && e.code !== 'EEXIST') {
+        console.log('Cannot create output path');
+        console.error(e);
         throw e;
     }
     // read from fs
     fs.readFile('./source.html', 'utf8', function fileRead(e, data) {
         if(e) {
+            console.log('Cannot read source');
+            console.error(e);
             throw e;
         }
         // save pseudo jQuery
@@ -31,8 +35,14 @@ fs.mkdir(path, function(e) {
         // parse document
         parseNodes($('.ConteudoTexto').children());
         // write each part to files
-        contituga.parts.forEach(function(e) {
-            fs.writeFile(path + '/' + e.title + '.md', e.text);
+        contituga.parts.forEach(function(part) {
+            fs.writeFile(path + '/' + part.title + '.md', part.text, function(e){
+                if(e) {
+                    console.log('Cannot write ' + part.title);
+                    console.error(e);
+                    throw e;
+                }
+            });
         });
     });
 });
