@@ -1,24 +1,19 @@
 {
-  "name": "constituga",
-  "description": "A JavaScript parser for the portuguese constitution",
-  "keywords": [
-    "constituicao",
-    "portuguesa",
-    "markdown",
-    "js",
-    "node"
-  ],
-  "maintainers": [
-    {
-      "name": "pitermarx",
-      "url": "http://github.com/pitermarx/"
+    "name": "constituga",
+    "description": "A JavaScript parser for the portuguese constitution",
+    "keywords": ["constituicao", "portuguesa", "markdown", "js", "node"],
+    "maintainers": [{
+        "name": "pitermarx",
+        "url": "http://github.com/pitermarx/"
+    }],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/pitermarx/constituga.git"
+    },
+    "dependencies": {
+        "cheerio": "*"
+    },
+    "scripts": {
+        "test": "node server.js"
     }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/pitermarx/constituga.git"
-  },
-  "dependencies": {
-    "cheerio": "*"
-  }
 }
