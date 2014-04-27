@@ -82,23 +82,29 @@ var contituga = (function() {
 function parseNodes(node) {
     var tagName = node[0].name,
         text = node.text().trim();
+    
+    // start only at PREÂMBULO
+    if (!parseNodes.startParsing){
+        parseNodes.startParsing = text === "PREÂMBULO";
+    }
+    
     // skip if empty
-    if(text) {
+    if(text && parseNodes.startParsing) {
         // a header
         if(tagName[0] === 'h') {
             // the importance is the header number
             var importance = +tagName[1];
             contituga.addTitle(importance, text);
         }
-        // a paragraph
-        else if(tagName === 'p') {
-            contituga.addLine(text);
-        }
         // special cases
         else if(text.indexOf("Princípios fundamentais") != -1) {
             contituga.addTitle(1, text);
         } else if(text.indexOf("PREÂMBULO") != -1) {
             contituga.addTitle(1, text);
+        }
+        // a paragraph
+        else if(tagName === 'p') {
+            contituga.addLine(text);
         }
     }
     // parse children
